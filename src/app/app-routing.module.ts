@@ -6,11 +6,18 @@ import { PortalComponent } from './portal/portal.component';
 import { QueryBalanceComponent } from './query-balance/query-balance.component';
 import { FundsTransferComponent } from './funds-transfer/funds-transfer.component';
 import { AtmWithdrawalComponent } from './atm-withdrawal/atm-withdrawal.component';
+import { AppComponent } from './app.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
-  {path: 'balance', component: QueryBalanceComponent},
-  {path: 'funds-transfer', component:FundsTransferComponent},
-  {path: 'ATM-Withdrawal', component: AtmWithdrawalComponent} 
+  {path: 'user', children:[
+    {path: '', component: QueryBalanceComponent},
+    {path: 'funds-transfer', component:FundsTransferComponent},
+    {path: 'ATM-Withdrawal', component: AtmWithdrawalComponent} 
+  ], component: DashboardComponent},
+  {path: '', component: LoginComponent}
+
+  
 ]
 
 

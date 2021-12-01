@@ -22,6 +22,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
+import { HttpClientJsonpModule, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { LoginComponent } from './login/login.component';
+import { AuthInterceptor } from './auth/auth.interceptor';
 
 
 @NgModule({
@@ -31,10 +34,13 @@ import {MatSelectModule} from '@angular/material/select';
     DashboardComponent,
     QueryBalanceComponent,
     FundsTransferComponent,
-    AtmWithdrawalComponent
+    AtmWithdrawalComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
+    HttpClientJsonpModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
@@ -52,7 +58,13 @@ import {MatSelectModule} from '@angular/material/select';
     MatInputModule,
     MatSelectModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+],
   bootstrap: [AppComponent],
   schemas:[
     CUSTOM_ELEMENTS_SCHEMA

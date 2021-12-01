@@ -1,6 +1,9 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Account } from '../models/account';
+import { UserAccount } from '../models/userAccount';
+import { CashService } from '../services/cash.service';
 
 @Component({
   selector: 'app-query-balance',
@@ -9,19 +12,38 @@ import { Account } from '../models/account';
 })
 export class QueryBalanceComponent implements OnInit {
 
-  constructor(private _formBuilder:FormBuilder) { }
+  constructor(private _formBuilder:FormBuilder,
+    private service:CashService) { }
   formGroup!: FormGroup;
   validationError:string = "";
-  account:String ="";
+  account:string ="";
   selectedAccount:string="";
+  accountlist:UserAccount[]=[];
+  userAccArr:Account[]=[];
+  userAccBal:UserAccount=new UserAccount();
   
   ngOnInit(): void {
-    this.formGroup = this._formBuilder.group({
-      sourceAcc: ['', Validators.required],
+     this.service.getUserAccounts().subscribe(result=>{
+      result.forEach(e=>{
+        var acc = new Account();
+        acc.value=e.accNumber;
+        acc.viewValue=e.accNumber;
+        this.userAccArr.push(acc);
+        //console.log("ACCOUNTs "+ e.accNumber, e.accName,e.balance,e.username);
+      })
+      
+      this.accountlist=result;
+    },
+    (error:HttpErrorResponse)=>{
+      console.log("Error from backended::"+error.message)
     });
+
+   this.formGroup = this._formBuilder.group({
+      sourceAcc: ['', Validators.required],
+    }); 
   }
   accounts:Account[] = [
-    {value:'Edward', viewValue:"12345"}
+    {value:'12345', viewValue:"12345"}
   ]
   balanceEnquiry():void{
     //var atmWthdrawal = new AtmWithdrawal();
@@ -30,16 +52,17 @@ export class QueryBalanceComponent implements OnInit {
      console.log(this.account);
     if(this.account !=""  ){
       this.validationError ="";
-      /* this.gcloud.addContactingClient(enquiry).then(resp=>{
-        this.openSnackBar();
-      }).catch(e=>{
-        console.log("Error:::"+e);
-      }) */
+      this.service.getAccountBal(this.account).subscribe(result=>{
+        this.userAccBal = result;
+        console.log("ACCOUNTs "+result);
+        //this.accountlist=result;
+      },
+      error=>{
+        console.log("Error from backended::"+error.message)
+      });
       this.formGroup.reset();
     }else{
       this.validationError ="Kindly complete the form!";
     } 
-    
   }
-
 }

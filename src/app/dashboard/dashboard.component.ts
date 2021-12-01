@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+import { CashService } from '../services/cash.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,5 +18,8 @@ export class DashboardComponent {
     );
 
   constructor(private breakpointObserver: BreakpointObserver) {}
+
+  ngOnInit(){
+  }
 
 }

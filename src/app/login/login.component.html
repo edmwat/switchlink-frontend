@@ -1,0 +1,21 @@
+<mat-card>       
+    <p>
+        <mat-card-title><h1>Signin</h1></mat-card-title>
+    </p>
+    <h3 style="color:#FF4081">{{validationError}}</h3>
+    <form [formGroup]="formGroup" (ngSubmit)="login()">
+        <p>
+            <mat-form-field fxFlex="80%">
+                <mat-label>Username</mat-label>
+                <input matInput formControlName="username" placeholder="e.g 1235" required>
+            </mat-form-field>
+        </p>
+        <p>
+            <mat-form-field fxFlex="80%">
+                <mat-label>Password</mat-label>
+                <input matInput formControlName="password" placeholder="e.g 1235" required>
+            </mat-form-field>
+        </p>  
+        <button type="submit" mat-flat-button color="primary" mat-button>Login</button>
+    </form> 
+</mat-card> 

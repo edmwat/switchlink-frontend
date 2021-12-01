@@ -1,4 +1,4 @@
 export class AtmWithdrawal{
-    sourceAcc:String = "";
+    srcAcc:String = "";
     amount:Number =0;
 }
