@@ -18,10 +18,6 @@ export class FundsTransferComponent implements OnInit {
   formGroup!: FormGroup;
   validationError:string = "";
   selectedAccount:string ="";
-
-  accounts:Account[] = [
-    {value:'Edward', viewValue:"12345"}
-  ]
   
   ngOnInit(): void {
 
@@ -31,7 +27,6 @@ export class FundsTransferComponent implements OnInit {
         acc.value=e.accNumber;
         acc.viewValue=e.accNumber;
         this.userAccArr.push(acc);
-        //console.log("ACCOUNTs "+ e.accNumber, e.accName,e.balance,e.username);
       })
     },
     (error:HttpErrorResponse)=>{
@@ -52,18 +47,14 @@ export class FundsTransferComponent implements OnInit {
     fundstrans.sourceAcc = this.formGroup.controls['sourceAcc'].value
     fundstrans.destinationAcc = this.formGroup.controls['destinationAcc'].value
     fundstrans.amount = this.formGroup.controls['amount'].value
-
-   console.log(fundstrans.sourceAcc,fundstrans.destinationAcc, fundstrans.amount);
    
     if(fundstrans.sourceAcc !="" && fundstrans.destinationAcc !="" && fundstrans.amount !=0){
       this.validationError ="";
-      /* this.gcloud.addContactingClient(enquiry).then(resp=>{
-        this.openSnackBar();
-      }).catch(e=>{
-        console.log("Error:::"+e);
-      }) */
+
       this.service.transferFunds(fundstrans).subscribe(res=>{
-        console.log("After funds transfer");
+        console.log("After funds transfer "+res);
+      },error=>{
+        console.log("Funds trasfer failed "+error.message)
       });
       this.formGroup.reset();
     }else{

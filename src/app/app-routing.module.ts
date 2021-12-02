@@ -8,14 +8,16 @@ import { FundsTransferComponent } from './funds-transfer/funds-transfer.componen
 import { AtmWithdrawalComponent } from './atm-withdrawal/atm-withdrawal.component';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './services/auth.guard';
 
 const routes: Routes = [
-  {path: 'user', children:[
+  {path: 'user', canActivate:[AuthGuard], children:[
     {path: '', component: QueryBalanceComponent},
     {path: 'funds-transfer', component:FundsTransferComponent},
     {path: 'ATM-Withdrawal', component: AtmWithdrawalComponent} 
   ], component: DashboardComponent},
-  {path: '', component: LoginComponent}
+  {path: 'login', component: LoginComponent},
+  {path: '', redirectTo: '/login', pathMatch: 'full'}
 
   
 ]

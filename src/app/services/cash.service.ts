@@ -20,7 +20,7 @@ export class CashService {
 
   headers = new HttpHeaders({
     'Access-Control-Allow-Origin': 'http://localhost:4200',
-    'Content-Type':'application/json',
+    'Content-Type':'application/json'
   });
 
   getAllAccounts():Observable<UserAccount[]>{
@@ -32,18 +32,16 @@ export class CashService {
 
 	getAccountBal(acc:string):Observable<UserAccount> {	
     return this.http.get<UserAccount>(this.baseUrl+`/api/balance/${acc}`,{headers:this.headers});
-		//return ResponseEntity.ok().body(cashService.getAccountBal(accNo));	
 	} 
 	
-	transferFunds(funds:FundsTransfer) {	
-    return this.http.post(this.baseUrl+"/api/transfer", funds, {headers:this.headers});
-		//return ResponseEntity.ok().body(cashService.transferFunds(fundsTransfer));	
+	transferFunds(funds:FundsTransfer):Observable<any> {	
+    return this.http.post<any>(this.baseUrl+"/api/transfer", funds, {headers:this.headers});
 	}
 	
-	atmWithdrawal(atm:AtmWithdrawal) {		
-		return this.http.post(this.baseUrl+"/api/atmWithdraw", atm, {headers:this.headers});	
+	atmWithdrawal(atm:AtmWithdrawal):Observable<any> {		
+		return this.http.post<any>(this.baseUrl+"/api/atmWithdraw", atm, {headers:this.headers});	
 	} 
 	updateAccount() {		
-		//return ResponseEntity.ok().body(null);		
+		
 	}
 }

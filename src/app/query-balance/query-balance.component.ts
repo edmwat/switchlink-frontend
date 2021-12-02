@@ -54,8 +54,6 @@ export class QueryBalanceComponent implements OnInit {
       this.validationError ="";
       this.service.getAccountBal(this.account).subscribe(result=>{
         this.userAccBal = result;
-        console.log("ACCOUNTs "+result);
-        //this.accountlist=result;
       },
       error=>{
         console.log("Error from backended::"+error.message)

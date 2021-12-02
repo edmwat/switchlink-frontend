@@ -25,6 +25,8 @@ import {MatSelectModule} from '@angular/material/select';
 import { HttpClientJsonpModule, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { AuthInterceptor } from './auth/auth.interceptor';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { AuthGuard } from './services/auth.guard';
 
 
 @NgModule({
@@ -56,9 +58,11 @@ import { AuthInterceptor } from './auth/auth.interceptor';
     MatListModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSnackBarModule
   ],
   providers: [
+    AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
