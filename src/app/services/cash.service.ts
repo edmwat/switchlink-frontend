@@ -6,6 +6,7 @@ import { HTTP_OPTIONS } from '../config/httpHeader';
 import { AtmWithdrawal } from '../models/atmWithdrawal';
 import { FundsTransfer } from '../models/fundsTransfer';
 import { LoginDto } from '../models/login';
+import { TransactionResponse } from '../models/transactionResponse';
 import { UserAccount } from '../models/userAccount';
 
 @Injectable({
@@ -38,8 +39,8 @@ export class CashService {
     return this.http.post<any>(this.baseUrl+"/api/transfer", funds, {headers:this.headers});
 	}
 	
-	atmWithdrawal(atm:AtmWithdrawal):Observable<any> {		
-		return this.http.post<any>(this.baseUrl+"/api/atmWithdraw", atm, {headers:this.headers});	
+	atmWithdrawal(atm:AtmWithdrawal):Observable<TransactionResponse> {		
+		return this.http.post<TransactionResponse>(this.baseUrl+"/api/atmWithdraw", atm, {headers:this.headers});	
 	} 
 	updateAccount() {		
 		

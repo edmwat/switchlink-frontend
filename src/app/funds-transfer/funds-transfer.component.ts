@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Account } from '../models/account';
 import { FundsTransfer } from '../models/fundsTransfer';
 import { CashService } from '../services/cash.service';
+import { Notifications } from '../services/notification.tost';
 
 @Component({
   selector: 'app-funds-transfer',
@@ -14,7 +15,7 @@ export class FundsTransferComponent implements OnInit {
 
   userAccArr:Account[]=[];
 
-  constructor(private _formBuilder:FormBuilder,private service:CashService) { }
+  constructor(private _formBuilder:FormBuilder,private service:CashService,private notif:Notifications) { }
   formGroup!: FormGroup;
   validationError:string = "";
   selectedAccount:string ="";
@@ -53,6 +54,7 @@ export class FundsTransferComponent implements OnInit {
 
       this.service.transferFunds(fundstrans).subscribe(res=>{
         console.log("After funds transfer "+res);
+        this.notif.openSnackBar(res.message);
       },error=>{
         console.log("Funds trasfer failed "+error.message)
       });

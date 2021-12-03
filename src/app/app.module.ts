@@ -24,9 +24,10 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import { HttpClientJsonpModule, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
-import { AuthInterceptor } from './auth/auth.interceptor';
+import { AuthInterceptor } from './services/auth.interceptor';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { AuthGuard } from './services/auth.guard';
+import { Notifications } from './services/notification.tost';
 
 
 @NgModule({
@@ -62,6 +63,7 @@ import { AuthGuard } from './services/auth.guard';
     MatSnackBarModule
   ],
   providers: [
+    Notifications,
     AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,

@@ -37,8 +37,7 @@ export class LoginComponent implements OnInit {
   
 
   login():void{
-    //window.open("http://localhost:8080/oauth2/authorization/google",'_self');
-     var login = new LoginDto();
+    let login = new LoginDto();
     
     login.username = this.formGroup.controls['username'].value
     login.password = this.formGroup.controls['password'].value

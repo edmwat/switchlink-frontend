@@ -20,12 +20,13 @@
     </form> 
 </mat-card> 
 <div >
-    <mat-card *ngIf="userAccBal">
+    <mat-card *ngIf="userAccBal.accName">
         <mat-card-title><h1>Balance Enquiry Results</h1></mat-card-title>
         <mat-content>
-            <p> {{userAccBal.accName}} &nbsp; <mat-icon>arrow_right_alt</mat-icon> &nbsp; {{userAccBal.accNumber}}</p> 
-            
-            <h3>{{userAccBal.balance}}</h3>
+            <h3>Acc Name: {{userAccBal.accName | uppercase }}</h3> 
+            <h3>Acc Number: {{userAccBal.accNumber}} </h3>
+            <h3>Acc Balance: <b>{{userAccBal.balance | currency:'KES ':'code' }}</b> </h3>
+
         </mat-content>
     </mat-card>
 </div>

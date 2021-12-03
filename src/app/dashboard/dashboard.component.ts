@@ -3,6 +3,9 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { CashService } from '../services/cash.service';
+import { AuthService } from '../services/auth.service';
+import { AuthenticatedUser } from '../models/authenticatedUser';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,15 +14,35 @@ import { CashService } from '../services/cash.service';
 })
 export class DashboardComponent {
 
+  authUser:string="";
+
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
       shareReplay()
     );
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  constructor(private breakpointObserver: BreakpointObserver,
+     private authService:AuthService,
+     private router:Router) {
+    this.authService.getAuthenticatedUser().subscribe(response=>{
+      this.authUser = response.username;
+      console.log("dashboard:"+response.username)
+    });
+  }
 
   ngOnInit(){
+    if(this.authUser == null){
+      this.logout();
+    }
+  }
+  logout(){
+    window.localStorage.removeItem('access_token');
+    this.router.navigate(['/login']);
+  }
+  removeToken(){
+    
+
   }
 
 }

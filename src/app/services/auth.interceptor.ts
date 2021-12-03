@@ -4,7 +4,7 @@ import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -19,31 +19,38 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    let token = window.localStorage.getItem("access_token");
+    if(token == null){
+      return next.handle(request);
+    }
 
-    const modreq = request.clone({
+    const req = request.clone({
       setHeaders:{      
         Authorization:`Bearer ${window.localStorage.getItem("access_token")}`
       }
     }); 
-    return next.handle(modreq).pipe(
-      tap((event:HttpEvent<any>)=>{
-        if(event instanceof HttpResponse){
-          console.log("At Interceptor "+event.headers.get("access_token"))
-          console.log("The body of every request: "+event.body)
 
-        }
+    //let modreq = 
+    return next.handle(req).pipe(
+     /*  tap((event:HttpEvent<any>)=>{
+        if(event instanceof HttpResponse){         
+          console.log("Body: "+event.body)        
+        }       
       },(err:any)=>{
         if(err instanceof HttpErrorResponse){
           if(err.status == 401){
             console.log("should login");
-          }else{
-            console.log("Whatever other error: "+err.status);
+          }else if(err.status == 403){
+            console.log("Error 403: "+err.url)
+          }
+          else{         
+            this.openSnackBar(err.error.text);
           }
         }
       }
-      )) 
+      ))  */
 
-        /* catchError((error: HttpErrorResponse) => {
+        catchError((error: HttpErrorResponse) => {
           let errorMsg = '';
           if (error.error instanceof ErrorEvent) {
             console.log('this is client side error');
@@ -60,7 +67,7 @@ export class AuthInterceptor implements HttpInterceptor {
             }
             else if(error.status == 200){
               console.log(error.message)
-              this.openSnackBar();
+              this.openSnackBar(error.error.text);
             }else{
               console.log("else interceptor")
               errorMsg = `Error Code: ${error.status},  Message: ${error.message}`;
@@ -68,10 +75,10 @@ export class AuthInterceptor implements HttpInterceptor {
           }
           return throwError(errorMsg);
         })
-      ) */
+      )
   }
-  openSnackBar() {
-    this._snackBar.open('Operation Successful', 'close', {
+  openSnackBar(message:string) {
+    this._snackBar.open(message, 'close', {
       duration: 5000,
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,

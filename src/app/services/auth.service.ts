@@ -2,7 +2,8 @@ import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/comm
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { catchError, first, tap } from 'rxjs/operators';
+import { catchError, first, map, tap } from 'rxjs/operators';
+import { AuthenticatedUser } from '../models/authenticatedUser';
 import { LoginDto } from '../models/login';
 import { Tokens } from '../models/tokenfile';
 
@@ -74,6 +75,18 @@ export class AuthService {
       console.log("User ADDED "+res);
     }, err=>{
       console.log("error occured "+err.message);
+    })
+  }
+  getAuthenticatedUser():Observable<AuthenticatedUser>{
+    const myheader = new HttpHeaders().set('Content-Type', 'application/json')
+    return this.http.get<AuthenticatedUser>(this.baseUrl+"/getAuth",{headers:myheader});
+  }
+  logout(){
+    const myheader = new HttpHeaders().set('Content-Type', 'application/json')
+    return this.http.get(this.baseUrl+"/auth/login?logout",{headers:myheader}).subscribe(res=>{
+      console.log("After logout::"+res)
+    },error=>{
+      console.log("Error logging out!"+error.message);
     })
   }
 }

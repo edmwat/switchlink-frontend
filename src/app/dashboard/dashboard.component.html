@@ -20,7 +20,9 @@
         *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span><mat-icon> insert_emoticon</mat-icon></span>
+      <mat-icon>account_circle</mat-icon>&nbsp;<span>{{authUser}}</span>
+      <span class="example-spacer"></span>
+      <button mat-raised-button (click)="logout()"  color="warn">Logout</button>
     </mat-toolbar>
     <!-- Add Content Here -->
     <router-outlet></router-outlet>

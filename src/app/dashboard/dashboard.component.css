@@ -20,3 +20,6 @@
 .mat-list-item{
   color:white;
 }
+.example-spacer {
+  flex: 1 1 auto;
+}

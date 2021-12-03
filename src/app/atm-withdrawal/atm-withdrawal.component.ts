@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Account } from '../models/account';
 import { AtmWithdrawal } from '../models/atmWithdrawal';
 import { CashService } from '../services/cash.service';
+import { Notifications } from '../services/notification.tost';
 
 @Component({
   selector: 'app-atm-withdrawal',
@@ -13,8 +14,11 @@ import { CashService } from '../services/cash.service';
 export class AtmWithdrawalComponent implements OnInit {
 
   userAccArr:Account[]=[];
+  
 
-  constructor(private _formBuilder:FormBuilder,private service:CashService) { }
+  constructor(private _formBuilder:FormBuilder,
+    private service:CashService,
+    private notif:Notifications) { }
   formGroup!: FormGroup;
   validationError:string = "";
   selectedAccount:string = "";
@@ -50,14 +54,14 @@ export class AtmWithdrawalComponent implements OnInit {
       this.validationError ="";
      
       this.service.atmWithdrawal(atmWthdrawal).subscribe(res=>{
-        console.log("After funds transfer "+res);
+        this.notif.openSnackBar(res.message);
       });
 
       this.formGroup.reset();
     }else{
       this.validationError ="Kindly complete the form!";
-    } 
-    
+    }  
   }
+  
 
 }
