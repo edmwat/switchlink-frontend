@@ -12,9 +12,9 @@ export class AuthInterceptor implements HttpInterceptor {
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
   
-  constructor(public authService:AuthService,
+  constructor(private authService:AuthService,
     private router: Router,
-    private _snackBar: MatSnackBar,) {
+    private _snackBar: MatSnackBar) {
 
   }
 
@@ -62,8 +62,15 @@ export class AuthInterceptor implements HttpInterceptor {
               console.log("login")
               this.router.navigate(['/login']);
             }else if(error.status == 403){
-              console.log("access token")
-              console.log(window.localStorage.getItem("access_token"));
+              window.localStorage.removeItem("access_token"); 
+              let rt = window.localStorage.getItem("refresh_token");
+              let refreshTkn = rt !== null ? rt : "";
+
+              window.localStorage.setItem("access_token",refreshTkn); 
+                            
+              this.authService.getRefreshToken();
+
+              //console.log(window.localStorage.getItem("access_token"));
             }
             else if(error.status == 200){
               console.log(error.message)

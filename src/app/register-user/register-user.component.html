@@ -1,0 +1,30 @@
+<div mat-dialog-content>
+    <h1>User Registration</h1>
+    <form [formGroup]="formGroup" (ngSubmit)="register()">
+        <p>
+            <mat-form-field fxFlex="100%"  appearance="standard">
+              <mat-label>Email</mat-label>
+              <input matInput formControlName="email"placeholder="example@gmail.com">
+              <div *ngIf="isSubmitted && formControls.email.errors?.required">This field is required</div>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field fxFlex="100%" appearance="standard">
+              <mat-label>Password</mat-label>
+              <input matInput type="password" formControlName="password"placeholder="******">
+              <div *ngIf="isSubmitted && formControls.password.errors?.required">This field is required</div>
+            </mat-form-field>
+          </p>
+          <!-- <p>
+            <mat-form-field  appearance="standard">
+              <mat-label>Confirm Password</mat-label>
+              <input matInput type="password" formControlName="confirmPassword"placeholder="******">
+              <div *ngIf="isSubmitted && formControls.confirmPassword.errors?.required">This field is required</div>
+            </mat-form-field>
+          </p> -->
+    </form>
+</div>
+<div mat-dialog-actions>
+    <button mat-stroked-button color="warn" (click)="onNoClick()">Cancel</button>
+    <button type="submit"  mat-stroked-button color="primary" (click)="registerNewUser()" [mat-dialog-close]="formGroup.value"  cdkFocusInitial>Register</button>
+</div>

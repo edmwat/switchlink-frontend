@@ -28,6 +28,9 @@ import { AuthInterceptor } from './services/auth.interceptor';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { AuthGuard } from './services/auth.guard';
 import { Notifications } from './services/notification.tost';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { RegisterUserComponent } from './register-user/register-user.component';
+import {MatDialogModule} from '@angular/material/dialog';
 
 
 @NgModule({
@@ -38,7 +41,8 @@ import { Notifications } from './services/notification.tost';
     QueryBalanceComponent,
     FundsTransferComponent,
     AtmWithdrawalComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterUserComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +64,9 @@ import { Notifications } from './services/notification.tost';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    FlexLayoutModule,
+    MatDialogModule
   ],
   providers: [
     Notifications,

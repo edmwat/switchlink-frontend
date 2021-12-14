@@ -5,7 +5,7 @@
     <h3 style="color:#FF4081">{{validationError}}</h3>
     <form [formGroup]="formGroup" (ngSubmit)="fundsTransfer()">
         <p>
-            <mat-form-field fxFlex="80%">
+            <mat-form-field fxFlex="40%">
                 <mat-label>Source Account</mat-label>
                 <mat-select formControlName="sourceAcc">
                     <mat-option *ngFor="let account of userAccArr" [value]="account.value">
@@ -15,13 +15,13 @@
             </mat-form-field>
         </p>
         <p>
-            <mat-form-field fxFlex="80%">
+            <mat-form-field fxFlex="40%">
                 <mat-label>Destination Account</mat-label>
                 <input matInput formControlName="destinationAcc" placeholder="e.g 1235" required>
             </mat-form-field>
         </p>
         <p>
-            <mat-form-field fxFlex="80%">
+            <mat-form-field fxFlex="40%">
                 <mat-label>Amount</mat-label>
                 <input matInput formControlName="amount" placeholder="e.g 5000" required>
             </mat-form-field>

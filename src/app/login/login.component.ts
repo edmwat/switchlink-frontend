@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Account } from '../models/account';
 import { FundsTransfer } from '../models/fundsTransfer';
 import { LoginDto } from '../models/login';
+import { RegisterUserComponent } from '../register-user/register-user.component';
 import { AuthService } from '../services/auth.service';
 import { CashService } from '../services/cash.service';
 
@@ -14,9 +16,13 @@ import { CashService } from '../services/cash.service';
 })
 export class LoginComponent implements OnInit {
 
+  isSubmitted:boolean = false;
+  password:String="";
+
   constructor(private _formBuilder:FormBuilder,
     private auth:AuthService, 
-    private router:Router) { 
+    private router:Router,
+    private dialog: MatDialog,) { 
       if(window.localStorage.getItem("access_token")){
         this.router.navigate(['/user']);
      }
@@ -37,6 +43,7 @@ export class LoginComponent implements OnInit {
   
 
   login():void{
+    this.isSubmitted=true;
     let login = new LoginDto();
     
     login.username = this.formGroup.controls['username'].value
@@ -52,8 +59,15 @@ export class LoginComponent implements OnInit {
     } 
     
   }
-  addNewUser(){
+  get formControls(){
+    return this.formGroup['controls'];
+  }
+  /* addNewUser(){
     this.auth.addNewUser();
+  } */
+  openNewUserWindow(){
+    this.dialog.open(RegisterUserComponent);
+    
   }
 
 
